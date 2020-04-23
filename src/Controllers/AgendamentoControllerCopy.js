@@ -1,17 +1,17 @@
 const Appointment = require("../Model/Appointment");
+const Users = require("../Model/Users");
 const mongoose = require("mongoose");
 
 module.exports = {
-  // async index(req, res) {
-  //   const barbeiroId = req.params.barbeiro;
+  async index(req, res) {
+    const providerID = req.params.providerID;
+    
 
-  //   const barbeiro = await connection("users")
-  //     .where("id", barbeiroId)
-  //     .select("*")
-  //     .first();
+    const provider = await Users.findById({_id: providerID});
+    
 
-  //   return res.json(barbeiro);
-  // },
+    return res.json(provider);
+  },
 
   async create(req, res) {
     const appointment = req.body;

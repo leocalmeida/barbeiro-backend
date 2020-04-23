@@ -19,6 +19,7 @@ routes.get("/dashboard", DashboardController.index);
 routes.get("/dashboardteste", DashboardControllerCopy.index);
 
 routes.get("/agendamento/:barbeiro", AgendamentoController.index);
+routes.get("/agendamentoteste/:providerID", AgendamentoControllerCopy.index);
 routes.post("/agendamento/agendado", AgendamentoController.create);
 routes.post("/agendamento/agendadoteste", AgendamentoControllerCopy.create);
 

@@ -6,11 +6,11 @@ const Appointment = new mongoose.Schema(
 		type: String,
 		required: true,
 	},
-	user_id: {
+	userID: {
 		type: String,
 		required: true,
 	},
-	provider_id: {
+	providerID: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Users",
 	},
