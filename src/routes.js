@@ -9,6 +9,8 @@ const DashboardControllerCopy = require("./Controllers/DashboardControllerCopy")
 const AgendamentoController = require("./Controllers/AgendamentoController");
 const AgendamentoControllerCopy = require("./Controllers/AgendamentoControllerCopy");
 
+const DataTeste = require("./Controllers/DataTeste");
+
 routes.post("/signin", SessionController.store);
 routes.post("/signinteste", SessionControllerCopy.store);
 
@@ -25,5 +27,7 @@ routes.post("/agendamento/agendadoteste", AgendamentoControllerCopy.create);
 
 // //teste
 // routes.get("/index", UserControllerCopy.index);
+
+routes.post("/datateste", DataTeste.create);
 
 module.exports = routes;

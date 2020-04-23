@@ -15,7 +15,7 @@ module.exports = {
 
   async create(req, res) {
     const appointment = req.body;
-
+    console.log(appointment);
     try {
       const data = await Appointment.create(appointment);
 
