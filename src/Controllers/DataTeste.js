@@ -1,10 +1,8 @@
-const { format, setHours, setMinutes } = require("date-fns");
-
 module.exports = {
-    async create(request, response){
-        const now = new Date().setHours(15).setMinutes(15);
-        const now2 = format(now, "yyyyMMddHHmm");
+  //'2020-04-24T04:00:00.000Z'
+  async create(request, response) {
+    const date = request.body;
 
-        return response.json(now2);
-    }
-}
+    return response.json(date);
+  },
+};
