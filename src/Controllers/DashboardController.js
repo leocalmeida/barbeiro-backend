@@ -1,20 +1,18 @@
-const connection = require("../Database/connection");
+const User = require("../Model/Users");
+const mongoose = require("mongoose");
 
 module.exports = {
-  async index(req, res) {
-    const clienteId = req.headers.authorization;
+  async index(request, response) {
+    const userID = request.headers.authorization;
+    
 
-    const cliente = await connection("users")
-      .where("id", clienteId)
-      .select(["id"])
-      .first();
+    const userValidate = await User.findById({ _id: userID });
+    
 
-    if (cliente != null) {
-      const cabelereiros = await connection("users")
-        .where("cabelereiro", true)
-        .select(["id", "nome", "email", "cabelereiro"]);
-
-      return res.json(cabelereiros);
+    if (userValidate) {
+      const providers = await User.find({ provider: true });
+      
+      return response.json(providers);
     }
   },
 };

@@ -1,28 +1,26 @@
 const bcrypt = require("bcryptjs");
-const connection = require("../Database/connection");
+const User = require("../Model/Users");
+const mongoose = require("mongoose");
 
 module.exports = {
-  async store(req, res) {
-    const { email, password } = req.body;
-    const id = req.header.authorization;
+  async store(request, response) {
+    const userLogin = request.body;
 
-    const user = await connection("users")
-      .where("email", email)
-      .select("*")
-      .first();
+    const userValidate = await User.findOne({ email: userLogin.email });
 
-    // console.log(user);
-
-    if (user == null) {
-      return res.json("Usuário não encontrado");
+    if (!userValidate) {
+      return response.json("E-mail não cadastrado");
     }
 
-    const valida = await bcrypt.compare(password, user.password);
+    const passwordValidate = await bcrypt.compare(
+      userLogin.password,
+      userValidate.password
+    );
 
-    const response = {
-      valida: valida,
-      user: user,
-    };
-    return res.json(response);
+    if (!passwordValidate) {
+      return response.json("Senha inválida");
+    }
+
+    return response.json(userValidate);
   },
 };

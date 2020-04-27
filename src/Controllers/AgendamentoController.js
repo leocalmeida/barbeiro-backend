@@ -1,30 +1,29 @@
-const connection = require("../Database/connection");
+const Appointment = require("../Model/Appointment");
+const Users = require("../Model/Users");
+const mongoose = require("mongoose");
 
 module.exports = {
   async index(req, res) {
-    const barbeiroId = req.params.barbeiro;
-    const barbeiro = await connection("users")
-      .where("id", barbeiroId)
-      .select("*")
-      .first();
+    const providerID = req.params.providerID;
 
-    return res.json(barbeiro);
+    const provider = await Users.findById({ _id: providerID });
+
+    return res.json(provider);
   },
 
   async create(req, res) {
-    const { data, usuarioId, barbeiroId } = req.body;
+    const appointment = req.body;
 
-    try {
-      const [id] = await connection("agendamento").insert({
-        data,
-        usuarioId,
-        barbeiroId,
-      });
+    const provider = await Appointment.find({
+      date: appointment.date,
+      providerID: appointment.providerID,
+    }).then((appointments) => appointments);
 
-      console.log("Agendamento Realizado");
-      return res.json({ id });
-    } catch (error) {
-      console.log(error);
+    if (provider.length > 0) {
+      return res.json(false);
+    } else {
+      await Appointment.create(appointment);
+      return res.json(true);
     }
   },
 };

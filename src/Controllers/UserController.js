@@ -1,41 +1,23 @@
 const bcrypt = require("bcryptjs");
-const generateUniqueID = require("../Util/generateUniqueID");
+const Users = require("../Model/Users");
 
-const connection = require("../Database/connection");
+//const connection = require("../Database/connection");
 
 module.exports = {
   async create(request, response) {
-    const { nome, email, senha, cabelereiro } = request.body;
-    const id = generateUniqueID();
+    const user = request.body;
 
-    const user = await connection("users")
-      .where("email", email)
-      .select("*")
-      .first();
+    const password = await bcrypt.hash(user.password, 10);
+    user.password = password;
 
-    if (user != null) {
-      return response.json("Usuário já cadastrado");
-    }
+    const userDb = await Users.create(user);
 
-    const password = await bcrypt.hash(senha, 10);
-
-    await connection("users").insert({
-      id,
-      nome,
-      email,
-      password,
-      cabelereiro,
-    });
-    return response.json({ nome, id });
+    return response.json(userDb);
   },
 
-  // //apenas para teste
+  //apenas para teste
   // async index(req, res) {
-  //   const user = await connection("users").select([
-  //     "nome",
-  //     "email",
-  //     "cabelereiro",
-  //   ]);
+  //   const user = await Users.find({});
 
   //   return res.json(user);
   // },
