@@ -1,7 +1,7 @@
 const express = require("express");
 const routes = express.Router();
-const multerConfig = require("./Config/multer");
-const upload = require("multer")(multerConfig);
+// const multerConfig = require("./Config/multer");
+// const upload = require("multer")(multerConfig);
 
 const UserController = require("./Controllers/UserController");
 const SessionController = require("./Controllers/SessionController");
@@ -11,14 +11,13 @@ const AvailabelController = require("./Controllers/AvailableController");
 
 routes.post("/signin", SessionController.store);
 
-routes.post("/signup", upload.single("avatar"), UserController.create);
+routes.post("/signup", UserController.create);
 
 routes.get("/dashboard", DashboardController.index);
 
 routes.get("/agendamento/:providerID", AgendamentoController.index);
 
 routes.post("/available/:providerID", AvailabelController.index);
-// routes.post("/available/:providerID", AvailabelController.index);
 
 routes.post("/agendamento/agendado", AgendamentoController.create);
 
