@@ -9,8 +9,6 @@ const DashboardController = require("./Controllers/DashboardController");
 const AgendamentoController = require("./Controllers/AgendamentoController");
 const AvailabelController = require("./Controllers/AvailableController");
 
-const DataTeste = require("./Controllers/DataTeste");
-
 routes.post("/signin", SessionController.store);
 
 routes.post("/signup", upload.single("avatar"), UserController.create);
@@ -23,10 +21,5 @@ routes.post("/available/:providerID", AvailabelController.index);
 // routes.post("/available/:providerID", AvailabelController.index);
 
 routes.post("/agendamento/agendado", AgendamentoController.create);
-
-// //teste
-// routes.get("/index", UserControllerCopy.index);
-
-routes.post("/teste", DataTeste.create);
 
 module.exports = routes;
